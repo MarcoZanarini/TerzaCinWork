@@ -13,6 +13,14 @@
 
 using namespace std;
 
+void piazzaNave( char matrice[DIM][DIM], int length );
+
+void piazzaNavi( char matrice[DIM][DIM] ) {
+    piazzaNave( matrice, 4 ); // Nave da 4
+    piazzaNave( matrice, 3 ); // Nave da 3
+    piazzaNave( matrice, 3 ); // Nave da 3
+}
+
 void piazzaNave( char matrice[DIM][DIM], int length ) {
     // Funzione per piazzare una nave di lunghezza "length" nella matrice
     int riga = rand() % DIM;
@@ -40,12 +48,41 @@ void inizializzaMatrice( char matrice[DIM][DIM] ) {
     }
 }
 
+void play( char matrice[DIM][DIM] ) {
+    // Funzione di gioco (da implementare)
+
+    while (true) {
+        string shot;
+    	stampaMatrice(matrice);
+        cout << "Inserisci le coordinate del colpo (es. A5): ";
+        cin >> shot;
+        int riga = shot[0] - 'A';
+        int colonna = stoi(shot.substr(1)) - 1;
+        if (matrice[riga][colonna] == 'X') {
+            cout << "Hai già colpito questa posizione!" << endl;
+        } else {
+            if (matrice[riga][colonna] == '*') {
+                cout << "Colpito!" << endl;
+                matrice[riga][colonna] = 'X'; // Segna colpo
+            } else {
+                cout << "Acqua!" << endl;
+                matrice[riga][colonna] = 'O'; // Segna acqua
+            }
+        }
+
+    }
+
+}
+
+
 int main() {
     srand(time(NULL));
     char m[DIM][DIM];
 
     inizializzaMatrice(m);
-    piazzaNave(m, 4);
-	stampaMatrice(m);
+    piazzaNavi(m);
+
+    play(m);
+
 	return 0;
 }
